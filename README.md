@@ -1,6 +1,8 @@
 PHP Slack
 =========
-
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/arthurkushman/slacky/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/arthurkushman/slacky/?branch=master)
+[![Build Status](https://scrutinizer-ci.com/g/arthurkushman/slacky/badges/build.png?b=master)](https://scrutinizer-ci.com/g/arthurkushman/slacky/build-status/master)
+[![Code Intelligence Status](https://scrutinizer-ci.com/g/arthurkushman/slacky/badges/code-intelligence.svg?b=master)](https://scrutinizer-ci.com/code-intelligence)
 > A lightweight PHP implementation of Slack's API.
 
 ### Provides
