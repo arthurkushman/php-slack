@@ -1,4 +1,4 @@
-<?php namespace Frlnc\Slack\Contracts\Http;
+<?php namespace Slacky\Contracts\Http;
 
 interface Interactor {
 
@@ -8,27 +8,26 @@ interface Interactor {
      * @param  string $url
      * @param  array  $parameters
      * @param  array  $headers
-     * @return \Frlnc\Slack\Contracts\Http\Response
+     * @return \Slacky\Contracts\Http\Response
      */
-    public function get($url, array $parameters = [], array $headers = []);
+    public function get(string $url, array $parameters = [], array $headers = []): Response;
 
     /**
      * Send a post request to a URL.
      *
      * @param  string $url
-     * @param  array  $urlParameters
      * @param  array  $postParameters
      * @param  array  $headers
-     * @return \Frlnc\Slack\Contracts\Http\Response
+     * @return \Slacky\Contracts\Http\Response
      */
-    public function post($url, array $urlParameters = [], array $postParameters = [], array $headers = []);
+    public function post(string $url, array $postParameters = [], array $headers = []): Response;
 
     /**
      * Sets the response factory to use.
      *
-     * @param  \Frlnc\Slack\Contracts\Http\ResponseFactory $factory
+     * @param  \Slacky\Contracts\Http\ResponseFactory $factory
      * @return void
      */
-    public function setResponseFactory(ResponseFactory $factory);
+    public function setResponseFactory(ResponseFactory $factory): void;
 
 }

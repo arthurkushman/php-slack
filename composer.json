@@ -1,24 +1,30 @@
 {
-    "name": "frlnc/php-slack",
+    "name": "arthurkushman/slacky",
     "description": "A lightweight PHP implementation of Slack's API.",
-    "keywords": ["slack"],
+    "keywords": ["slack", "php7", "bot"],
     "license": "MIT",
     "authors": [
         {
             "name": "Connor Parks",
             "email": "connor@connorvg.tv"
+        },
+        {
+          "name": "Arthur Kushman",
+          "email": "arthurkushman@gmail.com"
         }
     ],
     "require": {
-        "php": ">=5.4.0"
+        "php": "^7.1"
     },
     "require-dev": {
-        "mockery/mockery": "~0.9",
-        "phpunit/phpunit": "~4.0"
+        "phpunit/phpunit": "^7.4@dev",
+        "mockery/mockery": "^1.0@dev",
+        "fzaninotto/faker": "^1.9@dev"
     },
     "autoload": {
         "psr-4": {
-            "Frlnc\\Slack\\": "src/"
+            "Slacky\\": "src/",
+            "SlackyTests\\": "tests/"
         }
     },
     "minimum-stability": "dev"

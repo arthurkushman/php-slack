@@ -1,4 +1,4 @@
-<?php namespace Frlnc\Slack\Contracts\Http;
+<?php namespace Slacky\Contracts\Http;
 
 interface ResponseFactory {
 
@@ -8,8 +8,8 @@ interface ResponseFactory {
      * @param  string  $body
      * @param  array   $headers
      * @param  integer $statusCode
-     * @return \Frlnc\Slack\Contracts\Http\Response
+     * @return \Slacky\Contracts\Http\Response
      */
-    public function build($body, array $headers, $statusCode);
+    public function build($body, array $headers, $statusCode): Response;
 
 }

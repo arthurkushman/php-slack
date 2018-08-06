@@ -1,32 +1,33 @@
-<?php namespace Frlnc\Slack\Http;
+<?php namespace Slacky\Http;
 
-use Frlnc\Slack\Contracts\Http\ResponseFactory;
+use Slacky\Contracts\Http\Interactor;
+use Slacky\Contracts\Http\Response;
+use Slacky\Contracts\Http\ResponseFactory;
 
-class CurlInteractor implements \Frlnc\Slack\Contracts\Http\Interactor {
+class CurlInteractor implements Interactor
+{
 
     /**
      * The response factory to use.
      *
-     * @var \Frlnc\Slack\Contracts\Http\ResponseFactory
+     * @var \Slacky\Contracts\Http\ResponseFactory
      */
     protected $factory;
 
     /**
      * {@inheritdoc}
      */
-    public function get($url, array $parameters = [], array $headers = [])
+    public function get(string $url, array $parameters = [], array $headers = []) : Response
     {
-        $request = $this->prepareRequest($url, $parameters, $headers);
-
-        return $this->executeRequest($request);
+        return $this->executeRequest(static::prepareRequest($url, $parameters, $headers));
     }
 
     /**
      * {@inheritdoc}
      */
-    public function post($url, array $urlParameters = [], array $postParameters = [], array $headers = [])
+    public function post(string $url, array $postParameters = [], array $headers = []) : Response
     {
-        $request = $this->prepareRequest($url, $urlParameters, $headers);
+        $request = static::prepareRequest($url, [], $headers);
 
         curl_setopt($request, CURLOPT_POST, count($postParameters));
         curl_setopt($request, CURLOPT_POSTFIELDS, http_build_query($postParameters));
@@ -37,17 +38,18 @@ class CurlInteractor implements \Frlnc\Slack\Contracts\Http\Interactor {
     /**
      * Prepares a request using curl.
      *
-     * @param  string $url        [description]
-     * @param  array  $parameters [description]
-     * @param  array  $headers    [description]
+     * @param  string $url [description]
+     * @param  array $parameters [description]
+     * @param  array $headers [description]
      * @return resource
      */
-    protected static function prepareRequest($url, $parameters = [], $headers = [])
+    protected static function prepareRequest(string $url, array $parameters = [], array $headers = [])
     {
         $request = curl_init();
 
-        if ($query = http_build_query($parameters))
+        if (!empty($parameters) && $query = http_build_query($parameters)) {
             $url .= '?' . $query;
+        }
 
         curl_setopt($request, CURLOPT_URL, $url);
         curl_setopt($request, CURLOPT_RETURNTRANSFER, true);
@@ -62,9 +64,9 @@ class CurlInteractor implements \Frlnc\Slack\Contracts\Http\Interactor {
      * Executes a curl request.
      *
      * @param  resource $request
-     * @return \Frlnc\Slack\Contracts\Http\Response
+     * @return Response
      */
-    public function executeRequest($request)
+    public function executeRequest($request) : Response
     {
         $body = curl_exec($request);
         $info = curl_getinfo($request);
@@ -72,24 +74,22 @@ class CurlInteractor implements \Frlnc\Slack\Contracts\Http\Interactor {
         curl_close($request);
 
         $statusCode = $info['http_code'];
-        $headers = $info['request_header'];
+        $headers    = $info['request_header'];
 
-        if (function_exists('http_parse_headers'))
+        if (function_exists('http_parse_headers')) {
             $headers = http_parse_headers($headers);
-        else
-        {
+        } else {
             $header_text = substr($headers, 0, strpos($headers, "\r\n\r\n"));
-            $headers = [];
+            $headers     = [];
 
-            foreach (explode("\r\n", $header_text) as $i => $line)
-                if ($i === 0)
+            foreach (explode("\r\n", $header_text) as $i => $line) {
+                if ($i === 0) {
                     continue;
-                else
-                {
-                    list ($key, $value) = explode(': ', $line);
-
-                    $headers[$key] = $value;
                 }
+
+                [$key, $value] = explode(': ', $line);
+                $headers[$key] = $value;
+            }
         }
 
         return $this->factory->build($body, $headers, $statusCode);
@@ -98,7 +98,7 @@ class CurlInteractor implements \Frlnc\Slack\Contracts\Http\Interactor {
     /**
      * {@inheritdoc}
      */
-    public function setResponseFactory(ResponseFactory $factory)
+    public function setResponseFactory(ResponseFactory $factory) : void
     {
         $this->factory = $factory;
     }
