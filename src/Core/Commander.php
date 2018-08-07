@@ -457,11 +457,11 @@ class Commander
      */
     public function execute($command, array $parameters = [])
     {
-        if (!isset(self::$commands[$command]))
+        if (!isset(self::$commands[$command])) {
             throw new InvalidArgumentException("The command '{$command}' is not currently supported");
+        }
 
         $command = self::$commands[$command];
-
         if (!empty($command['token'])) {
             $parameters = array_merge($parameters, ['token' => $this->token]);
         }

@@ -6,9 +6,9 @@ interface Response
     /**
      * Gets the body of the response.
      *
-     * @return string
+     * @return array
      */
-    public function getBody() : string;
+    public function getBody() : array;
 
     /**
      * Gets the headers of the response.

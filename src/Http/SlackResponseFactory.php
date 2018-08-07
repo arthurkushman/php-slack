@@ -1,6 +1,5 @@
 <?php namespace Slacky\Http;
 
-use Frlnc\Slack\Http\SlackResponse;
 use Slacky\Contracts\Http\Response;
 use Slacky\Contracts\Http\ResponseFactory;
 

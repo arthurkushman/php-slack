@@ -1,4 +1,4 @@
-<?php namespace Frlnc\Slack\Http;
+<?php namespace Slacky\Http;
 
 use Slacky\Contracts\Http\Response;
 
@@ -44,7 +44,7 @@ class SlackResponse implements Response, \JsonSerializable {
     /**
      * {@inheritdoc}
      */
-    public function getBody(): string
+    public function getBody(): array
     {
         return $this->body;
     }
@@ -78,7 +78,7 @@ class SlackResponse implements Response, \JsonSerializable {
      *
      * @return array
      */
-    public function toArray()
+    public function toArray() : array
     {
         return [
             'status_code' => $this->getStatusCode(),
