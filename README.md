@@ -6,9 +6,15 @@ PHP Slack
 [![codecov](https://codecov.io/gh/arthurkushman/slacky/branch/master/graph/badge.svg)](https://codecov.io/gh/arthurkushman/slacky)
 > A lightweight PHP implementation of Slack's API.
 
+### Why this lib was forked and recoded
+
+- Legacy code (repo was left for > 2 years) didn't allow to support new features of PHP>=7.1
+- Minor bugs and fragile functionality
+- None unit-tests coverage 
+
 ### Provides
 
-* Frlnc\Slack\Contracts
+* Slacky\Contracts
 
     A small set of contracts to allow for the consumption of the Slack API. **Interactor**, **Response** and **ResponseFactory**.
 
@@ -22,9 +28,9 @@ Here is a very simple example of using this package:
 ```php
 <?php
 
-use Frlnc\Slack\Http\SlackResponseFactory;
-use Frlnc\Slack\Http\CurlInteractor;
-use Frlnc\Slack\Core\Commander;
+use Slacky\Http\SlackResponseFactory;
+use Slacky\Http\CurlInteractor;
+use Slacky\Core\Commander;
 
 $interactor = new CurlInteractor;
 $interactor->setResponseFactory(new SlackResponseFactory);
